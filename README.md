@@ -1,4 +1,4 @@
 # NPMRDS
 Wrangling some vehicle probe data from the National Performance Management Research Data Set (NPMRDS) in PostGIS. Yeehaw?
 
-Inrix calculates some performance statistics for me, so this repository mostly tries to reverse engineer those stats or occasionally, come up with new ones that we need at TMACOG.
+This repository will be limited to new or custom analyses or measures developed for TMACOG planning purposes. Any resemblance to proprietary code is purely coincidental. If you suspect the code attempts to knock-off or reverse engineer NPMRDS products in any way, please do not hesitate to contact me.
