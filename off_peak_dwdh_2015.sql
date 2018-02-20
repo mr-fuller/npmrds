@@ -24,7 +24,7 @@ off_peak_dwdh_2015 as
 tmc_code,
 round(sum(delay_hours*miles),2) as off_peak_dwdh_2015
 from determine_delay_hours
-where date_part('hour', measurement_tstamp)  < 6 or date_part('hour', measurement_tstamp)  > 17 and date_part('year', measurement_tstamp) = 2015
+where (date_part('hour', measurement_tstamp)  < 6 or date_part('hour', measurement_tstamp)  > 17) and date_part('year', measurement_tstamp) = 2015
 group by tmc_code
 )
 
