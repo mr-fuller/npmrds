@@ -5,8 +5,7 @@ with
 joined as(
 	
 select i.*,
-g.miles,
-g.geom
+g.*
 from npmrds2017truck10min_no_null as i
 full join tmacog_tmcs as g
 on g.tmc = i.tmc_code
