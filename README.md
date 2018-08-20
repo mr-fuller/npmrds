@@ -4,7 +4,7 @@ Wrangling some vehicle probe data from the National Performance Management Resea
 ## General usage notes
 Each category of performance metric comes with queries for distinct years and periods, but also with a file that allows the queries to be run in a batch, usually named something like "all_metric_queries.sql". If you are using the command line, you can run the batch with the command: `psql -U *user* -d *dbname* -f "<updated/file/path/location>/all_<metric>_queries.sql"` and enter your password if prompted.
 
-### Other usefull files
+### Other useful files
 - join_easy_button_report.sql: If you are familiar with the NPMRDS Ritis site reports, this query joins the "easy button" report output to a geometry layer for the purpose of visualizing the data in the program of your choosing (R, QGIS, etc).
 
 
