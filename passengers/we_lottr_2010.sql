@@ -1,7 +1,9 @@
 --drop table congestion_lottr;
 --create table congestion_lottr as
 alter table congestion_lottr
-add column if not exists lottr_we_2010 numeric;
+add column if not exists lottr_we_2010 numeric,
+add column if not exists tt_we50pct_2010 numeric,
+add column if not exists tt_we80pct_2010 numeric;
 
 with
 joined as(
@@ -28,15 +30,17 @@ case when(percentile_disc(0.5) within group (order by travel_time_minutes) = 0)
 from joined
 where date_part('year',measurement_tstamp) = 2010 and
 --tmc_code = '108+12989' and
---Mon-Fri
-((extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
+--8AM to 6PM Sat and Sunday
+(
 	--off Peak
-	(date_part('hour', measurement_tstamp)  < 6 or date_part('hour', measurement_tstamp)  > 17 )) or
+	(date_part('hour', measurement_tstamp)  > 5 or date_part('hour', measurement_tstamp)  < 20 ) and
 	(extract(dow from measurement_tstamp) = 0 or extract(dow from measurement_tstamp) = 6)
 	group by tmc_code, geom
 )
 
 update congestion_lottr
+set tt_we50pct_2010 = apl.tt_we50pct_2010,
+set tt_we80pct_2010 = apl.tt_we80pct_2010,
 set lottr_we_2010 = apl.lottr
 from apl
 where congestion_lottr.tmc_code = apl.tmc_code
