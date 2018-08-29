@@ -20,7 +20,7 @@ apl as (
 select
 tmc_code,
 --geom,
-percentile_disc(0.5) within group (order by travel_time_minutes) as tt_we80pct_2013,
+percentile_disc(0.5) within group (order by travel_time_minutes) as tt_we50pct_2013,
 percentile_disc(0.8) within group (order by travel_time_minutes) as tt_we80pct_2013,
 case when(percentile_disc(0.5) within group (order by travel_time_minutes) = 0)
 	then null
