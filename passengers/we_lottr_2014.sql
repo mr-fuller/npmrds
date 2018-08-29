@@ -41,7 +41,7 @@ where date_part('year',measurement_tstamp) = 2014 and
 
 update congestion_lottr
 set lottr_we_2014 = apl.lottr,
-set tt_we50pct_2014 = apl.tt_we50pct_2014,
-set tt_we80pct_2014 = apl.tt_we80pct_2014
+tt_we50pct_2014 = apl.tt_we50pct_2014,
+tt_we80pct_2014 = apl.tt_we80pct_2014
 from apl
 where congestion_lottr.tmc_code = apl.tmc_code

@@ -28,7 +28,7 @@ case when(percentile_disc(0.5) within group (order by travel_time_minutes) = 0)
 	end as lottr
 
 from joined
-where date_part('year',measurement_tstamp) = 2013 and  
+where date_part('year',measurement_tstamp) = 2013 and
 --tmc_code = '108+12989' and
 --Sat and Sun 6AM-8PM
 
@@ -40,7 +40,7 @@ where date_part('year',measurement_tstamp) = 2013 and
 
 update congestion_lottr
 set lottr_we_2013 = apl.lottr,
-set tt_we50pct_2013 = apl.tt_we50pct_2013,
-set tt_we80pct_2013 = apl.tt_we80pct_2013
+tt_we50pct_2013 = apl.tt_we50pct_2013,
+tt_we80pct_2013 = apl.tt_we80pct_2013
 from apl
 where congestion_lottr.tmc_code = apl.tmc_code
