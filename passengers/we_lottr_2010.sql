@@ -31,7 +31,7 @@ from joined
 where date_part('year',measurement_tstamp) = 2010 and
 --tmc_code = '108+12989' and
 --8AM to 6PM Sat and Sunday
-(
+
 	--off Peak
 	(date_part('hour', measurement_tstamp)  > 5 or date_part('hour', measurement_tstamp)  < 20 ) and
 	(extract(dow from measurement_tstamp) = 0 or extract(dow from measurement_tstamp) = 6)
