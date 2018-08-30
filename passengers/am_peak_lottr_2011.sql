@@ -1,6 +1,6 @@
 --drop table congestion_lottr;
 --create table congestion_lottr as
-vacuum congestion_lottr;
+--vacuum congestion_lottr;
 alter table congestion_lottr
 add column if not exists am_peak_lottr_2011 numeric;
 
