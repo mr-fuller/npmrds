@@ -1,4 +1,6 @@
-select percentile_disc(0.5) within group (order by tttr_amp_2017) as amp_2017_median,
+select 
+tmc_code,
+percentile_disc(0.5) within group (order by tttr_amp_2017) as amp_2017_median,
 percentile_disc(0.5) within group (order by tttr_midd_2017) as midd_2017_median,
 percentile_disc(0.5) within group (order by tttr_pmp_2017) as pmp_2017_median,
 percentile_disc(0.5) within group (order by tttr_we_2017) as we_2017_median,
@@ -27,4 +29,5 @@ percentile_disc(0.5) within group (order by tttr_amp_2012) as amp_2012_median,
 percentile_disc(0.5) within group (order by tttr_midd_2012) as midd_2012_median,
 percentile_disc(0.5) within group (order by tttr_pmp_2012) as pmp_2012_median,
 percentile_disc(0.5) within group (order by tttr_we_2012) as we_2012_median
-from tttr;
+from tttr
+group by tmc_code;
