@@ -11,7 +11,7 @@ joined as(
 select i.*,
 g.miles,
 g.geom
-from inrix2017data as i
+from npmrds2017passenger_10min_no_null as i
 full join tmacog_tmcs as g
 on g.tmc = i.tmc_code
 ),
