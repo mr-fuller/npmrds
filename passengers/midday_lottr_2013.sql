@@ -31,7 +31,7 @@ where date_part('year',measurement_tstamp) = 2013 and
 --Mon-Fri
 (extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
 	--AM Peak
-	(date_part('hour',measurement_tstamp) > 8 and date_part('hour',measurement_tstamp) < 14)
+	(date_part('hour',measurement_tstamp) > 9 and date_part('hour',measurement_tstamp) < 16)
 	group by tmc_code, geom
 )
 

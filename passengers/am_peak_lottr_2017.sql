@@ -1,5 +1,6 @@
---drop table congestion_lottr;
---create table congestion_lottr as
+drop table congestion_lottr;
+create table congestion_lottr;
+
 alter table congestion_lottr
 add column if not exists lottr_amp_2017 numeric,
 add column if not exists tt_amp50pct_2017 numeric,
@@ -40,15 +41,15 @@ tmc_code as travel_time_code,
 
 percentile_disc(0.8) within group (order by travel_time_minutes) as tt_amp80pct_2017,
 percentile_disc(0.5) within group (order by travel_time_minutes) as tt_amp50pct_2017,
-round(cast(percentile_disc(0.8) within group (order by travel_time_minutes)/percentile_disc(0.5) within group (order by travel_time_minutes) as numeric),2) as lottr
+round(cast(percentile_disc(0.8) within group (order by travel_time_minutes)/
+percentile_disc(0.5) within group (order by travel_time_minutes) as numeric),2) as lottr
 
 from joined
 where
---tmc_code = '108+12989' and
 --Mon-Fri
 (extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
 	--AM Peak
-	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 9)
+	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 10)
 	group by tmc_code, geom)
 
 update congestion_lottr
