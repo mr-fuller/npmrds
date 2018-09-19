@@ -5,9 +5,9 @@ add column if not exists tttr_pmp_2015 numeric,
 add column if not exists ttt_pmp50pct_2015 numeric,
 add column if not exists ttt_pmp95pct_2015 numeric;
 
-with 
+with
 joined as(
-	
+
 select i.*,
 g.miles,
 g.geom
@@ -24,16 +24,16 @@ round(cast(percentile_disc(0.95) within group (order by travel_time_seconds) as 
 round(cast(percentile_disc(0.5) within group (order by travel_time_seconds) as numeric), 0) as ttt_pmp50pct_2015,
 case when(percentile_disc(0.5) within group (order by travel_time_seconds) = 0)
 	then null
-	else round(cast(percentile_disc(0.95) within group (order by travel_time_seconds)/percentile_disc(0.5) within group (order by travel_time_seconds) as numeric),2) 
+	else round(cast(percentile_disc(0.95) within group (order by travel_time_seconds)/percentile_disc(0.5) within group (order by travel_time_seconds) as numeric),2)
 	end as tttr
 
 from joined
-where date_part('year',measurement_tstamp) = 2015 and  
---tmc_code = '108+12989' and 
+where date_part('year',measurement_tstamp) = 2015 and
+--tmc_code = '108+12989' and
 --Mon-Fri
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and 
+(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
 	--PM Peak
-	(date_part('hour',measurement_tstamp) > 13 and date_part('hour',measurement_tstamp) < 18)
+	(date_part('hour',measurement_tstamp) > 15 and date_part('hour',measurement_tstamp) < 20)
 	group by tmc_code, geom
 )
 

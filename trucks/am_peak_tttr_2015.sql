@@ -5,9 +5,9 @@ add column if not exists tttr_amp_2015 numeric,
 add column if not exists ttt_amp50pct_2015 numeric,
 add column if not exists ttt_amp95pct_2015 numeric;
 
-with 
+with
 joined as(
-	
+
 select i.*,
 g.miles,
 g.geom
@@ -25,12 +25,12 @@ percentile_disc(0.5) within group (order by travel_time_seconds) as ttt_amp50pct
 round(cast(percentile_disc(0.95) within group (order by travel_time_seconds)/percentile_disc(0.5) within group (order by travel_time_seconds) as numeric),2) as tttr_amp_2015
 
 from joined
-where date_part('year',measurement_tstamp) = 2015 and  
---tmc_code = '108+12989' and 
+where date_part('year',measurement_tstamp) = 2015 and
+--tmc_code = '108+12989' and
 --Mon-Fri
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and 
+(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
 	--AM Peak
-	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 9)
+	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 10)
 	group by tmc_code, geom
 )
 
