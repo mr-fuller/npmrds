@@ -31,7 +31,7 @@ from determine_delay_hours
 where
 (extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and--Mon-Fri
 date_part('year',measurement_tstamp) = 2017 and
-(date_part('hour', measurement_tstamp)  > 13 and date_part('hour', measurement_tstamp)  < 18)
+(date_part('hour', measurement_tstamp)  > 15 and date_part('hour', measurement_tstamp)  < 20)
 group by tmc_code
 )
 
