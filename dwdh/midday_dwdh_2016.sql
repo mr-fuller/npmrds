@@ -1,6 +1,6 @@
---drop table congestion_locations;
---create table congestion_locations as
-alter table congestion_locations
+--drop table passenger_dwdm;
+--create table passenger_dwdm as
+alter table passenger_dwdm
 add column if not exists midday_dwdm_2016 numeric,
 add column if not exists midday_dwdm_pct_2016 numeric;
 
@@ -18,7 +18,7 @@ case when (i.reference_speed*0.75 > i.speed)
 end as delay_minutes,
 o.geom
 from tmacog_tmcs as o
-full outer join npmrds2012to2017data as i
+full outer join npmrds2012to2016passenger_10min_no_null as i
 on o.tmc = i.tmc_code
 full join tmc_identification as t on t.tmc = i.tmc_code
 --where i.cvalue > 10
@@ -39,8 +39,8 @@ group by tmc_code
 --for midday Peak 9AM-2PM
 --am_peak as
 --(
-update congestion_locations
+update passenger_dwdm
 set midday_dwdm_2016 = m_dwdh_2016.midday_dwdm_2016,
 midday_dwdm_pct_2016 = m_dwdh_2016.midday_dwdm_pct_2016
 from m_dwdh_2016
-where congestion_locations.tmc_code = m_dwdh_2016.tmc_code ;--and (date_part('hour', measurement_tstamp)  > 8 and date_part('hour', measurement_tstamp)  < 14);
+where passenger_dwdm.tmc_code = m_dwdh_2016.tmc_code ;--and (date_part('hour', measurement_tstamp)  > 8 and date_part('hour', measurement_tstamp)  < 14);
