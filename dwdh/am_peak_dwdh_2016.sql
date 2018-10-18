@@ -1,9 +1,10 @@
 --drop table congestion_locations;
 --create table congestion_locations as
 alter table congestion_locations
-add column if not exists am_peak_dwdh_2016 numeric;
+add column if not exists amp_dwdm_2016 numeric,
+add column if not exists amp_dwdm_pct_2016 numeric;
 
-with determine_delay_hours as(
+with determine_delay_minutes as(
 select i.*,
 case when (i.tmc_code = t.tmc)
 	then t.miles
@@ -15,23 +16,24 @@ o.aadt,
 --t.direction,
 --t.intersection,
 case when (i.reference_speed*0.75 > i.speed)
-  THEN 1 
+  THEN 10
   ELSE 0
-end as delay_hours,
+end as delay_minutes,
 o.geom
 from tmacog_tmcs as o
 full outer join npmrds2012to2017data as i
-on o.tmc = i.tmc_code 
+on o.tmc = i.tmc_code
 full join tmc_identification as t on t.tmc = i.tmc_code
 --where date_part('year', i.measurement_tstamp)  =  2016 --and date_part('hour', measurement_tstamp)  <= 14
 ),
-am_peak_dwdh_2016 as
+amp_dwdm_2016 as
 (select
 tmc_code,
-round(sum(delay_hours*miles),2) as am_peak_dwdh_2016
-from determine_delay_hours
-where (date_part('hour', measurement_tstamp)  > 5 and date_part('hour', measurement_tstamp)  < 9 ) and 
-date_part('year', measurement_tstamp) = 2016 and 
+round(sum(a.delay_minutes*a.miles),2) as amp_dwdm_2016,
+round(sum(a.delay_minutes*a.miles)/(4*5*52*60)*100,2) as amp_dwdm_pct_2016
+from determine_delay_minutes
+where (date_part('hour', measurement_tstamp)  > 5 and date_part('hour', measurement_tstamp)  < 9 ) and
+date_part('year', measurement_tstamp) = 2016 and
 (extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) --Mon-Fri
 group by tmc_code
 )
@@ -39,7 +41,8 @@ group by tmc_code
 --for am Peak 6-9AM
 --am_peak as
 --(
-update congestion_locations 
-set am_peak_dwdh_2016 = am_peak_dwdh_2016.am_peak_dwdh_2016
-from am_peak_dwdh_2016
-where congestion_locations.tmc_code = am_peak_dwdh_2016.tmc_code ;--and (date_part('hour', measurement_tstamp)  > 8 and date_part('hour', measurement_tstamp)  < 14);
+update congestion_locations
+set amp_dwdm_2016 = amp_dwdm_2016.amp_dwdm_2016,
+amp_dwdm_pct_2016 = amp_dwdm_2016.amp_dwdm_pct_2016
+from amp_dwdm_2016
+where congestion_locations.tmc_code = amp_dwdm_2016.tmc_code ;--and (date_part('hour', measurement_tstamp)  > 8 and date_part('hour', measurement_tstamp)  < 14);

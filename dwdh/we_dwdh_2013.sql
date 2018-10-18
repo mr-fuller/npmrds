@@ -1,9 +1,9 @@
---drop table passenger_dwdh;
---create table passenger_dwdh as
-alter table passenger_dwdh
+--drop table passenger_dwdm;
+--create table passenger_dwdm as
+alter table passenger_dwdm
 add column if not exists we_dwdm_2013 numeric,
 add column if not exists we_dwdm_pct_2013 numeric;
-update passenger_dwdh
+update passenger_dwdm
 set we_dwdm_2013 = null;
 
 with determine_delay_hours as(
@@ -44,7 +44,7 @@ group by tmc_code
 --for off Peak midnight-6AM and 6-11:59 PM
 
 
-update passenger_dwdh as cl
+update passenger_dwdm as cl
 set we_dwdm_2013 = we_dwdm_2013.we_dwdm_2013,
 we_dwdm_pct_2013 = we_dwdm_2013.we_dwdm_pct_2013
 from we_dwdm_2013
