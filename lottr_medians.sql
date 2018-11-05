@@ -1,6 +1,6 @@
 select
 
-percentile_disc(0.5) within group (order by am_peak_lottr_2017) as amp_2017_median,
+percentile_disc(0.5) within group (order by lottr_amp_2017) as amp_2017_median,
 percentile_disc(0.5) within group (order by midday_lottr_2017) as midd_2017_median,
 percentile_disc(0.5) within group (order by pm_peak_lottr_2017) as pmp_2017_median,
 percentile_disc(0.5) within group (order by lottr_we_2017) as we_2017_median,

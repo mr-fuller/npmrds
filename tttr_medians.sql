@@ -29,5 +29,7 @@ percentile_disc(0.5) within group (order by tttr_amp_2012) as amp_2012_median,
 percentile_disc(0.5) within group (order by tttr_midd_2012) as midd_2012_median,
 percentile_disc(0.5) within group (order by tttr_pmp_2012) as pmp_2012_median,
 percentile_disc(0.5) within group (order by tttr_we_2012) as we_2012_median
-from tttr;
+from tttr
+where tmc_code in 
+( select tmc from tmacog_tmcs where f_system < 3);
 
