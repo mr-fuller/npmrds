@@ -1,6 +1,6 @@
---drop table congestion_locations;
---create table congestion_locations as
-alter table passenger_dwdh
+--drop table passenger_dwdm;
+--create table passenger_dwdm as
+alter table passenger_dwdm
 add column if not exists midday_dwdm_2017 numeric,
 add column if not exists midday_dwdm_pct_2017 numeric;
 
@@ -39,7 +39,7 @@ group by tmc_code
 --for midday Peak 9AM-2PM
 --am_peak as
 --(
-update passenger_dwdh as cl
+update passenger_dwdm as cl
 set midday_dwdm_2017 = midday_dwdm_2017.midday_dwdm_2017,
 midday_dwdm_pct_2017 = midday_dwdm_2017.midday_dwdm_pct_2017
 from midday_dwdm_2017
