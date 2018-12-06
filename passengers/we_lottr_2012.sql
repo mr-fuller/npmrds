@@ -30,10 +30,8 @@ case when(percentile_disc(0.5) within group (order by travel_time_minutes) = 0)
 from joined
 where date_part('year',measurement_tstamp) = 2012 and
 --tmc_code = '108+12989' and
---Sat and Sun 8AM-6PM
-
-	--off Peak
-	(date_part('hour', measurement_tstamp)  > 5 or date_part('hour', measurement_tstamp)  < 20 ) and
+--Sat and Sun 6AM-8PM
+	(date_part('hour', measurement_tstamp) between 6 and 19) and
 	(extract(dow from measurement_tstamp) = 0 or extract(dow from measurement_tstamp) = 6)
 	group by tmc_code, geom
 )

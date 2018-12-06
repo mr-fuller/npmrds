@@ -30,9 +30,9 @@ tmc_code,
 round(sum(delay_minutes*miles),2) as midday_dwdm_2017,
 round(sum(delay_minutes*miles)/(6*5*52*60)*100,2) as midday_dwdm_pct_2017
 from determine_delay_hours
-where (date_part('hour', measurement_tstamp)  > 9 and date_part('hour', measurement_tstamp)  < 16) and
+where (date_part('hour',measurement_tstamp) between 10 and 15) and
 date_part('year',measurement_tstamp) = 2017 and
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) --Mon-Fri
+(extract(dow from measurement_tstamp ) between 1 and 5) and--Mon-Fri
 group by tmc_code
 )
 

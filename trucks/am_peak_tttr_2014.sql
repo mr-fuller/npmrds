@@ -28,9 +28,9 @@ from joined
 where date_part('year',measurement_tstamp) = 2014 and
 --tmc_code = '108+12989' and
 --Mon-Fri
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
+(extract(dow from measurement_tstamp ) between 1 and 5) and
 	--AM Peak
-	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 10)
+	(date_part('hour',measurement_tstamp) between 6 and 9)
 	group by tmc_code, geom
 )
 

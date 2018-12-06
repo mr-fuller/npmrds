@@ -29,9 +29,9 @@ tmc_code,
 round(sum(delay_hours*miles),2) as pmp_truck_dwdh_2017
 from determine_delay_hours
 where
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and--Mon-Fri
+(extract(dow from measurement_tstamp ) between 1 and 5) and
 date_part('year',measurement_tstamp) = 2017 and
-(date_part('hour', measurement_tstamp)  > 15 and date_part('hour', measurement_tstamp)  < 20)
+(date_part('hour',measurement_tstamp) between 16 and 19)
 group by tmc_code
 )
 

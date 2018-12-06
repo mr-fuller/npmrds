@@ -38,7 +38,8 @@ date_part('year',measurement_tstamp) = 2017 and
  --sat and sun
 (extract(dow from measurement_tstamp ) = 0 or extract(dow from measurement_tstamp ) = 6) and
 --6AM to 8PM
-(date_part('hour', measurement_tstamp)  > 5 and date_part('hour', measurement_tstamp)  < 20 )
+--Sat and Sun 6AM-8PM
+	(date_part('hour', measurement_tstamp) between 6 and 19)
 
 group by tmc_code
 )

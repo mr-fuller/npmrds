@@ -31,9 +31,9 @@ round(sum(delay_minutes*miles),2) as pmp_dwdm_2017,
 round(sum(delay_minutes*miles)/(4*5*52*60)*100,2) as pmp_dwdm_pct_2017
 from determine_delay_hours
 where
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and--Mon-Fri
+(extract(dow from measurement_tstamp ) between 1 and 5) and--Mon-Fri
 date_part('year',measurement_tstamp) = 2017 and
-(date_part('hour', measurement_tstamp)  > 15 and date_part('hour', measurement_tstamp)  < 20) --4-8PM
+(date_part('hour',measurement_tstamp) between 16 and 19) --4-8PM
 group by tmc_code
 )
 

@@ -29,9 +29,9 @@ tmc_code,
 round(sum(a.delay_minutes*a.miles),2) as amp_dwdm_2012,
 round(sum(a.delay_minutes*a.miles)/(4*5*52*60)*100,2) as amp_dwdm_pct_2012
 from determine_delay_minutes
-where (date_part('hour', measurement_tstamp)  > 5 and date_part('hour', measurement_tstamp)  < 9 )and
+where (date_part('hour',measurement_tstamp) between 6 and 9) and
 date_part('year', measurement_tstamp) = 2012 and
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6)
+(extract(dow from measurement_tstamp ) between 1 and 5)
 group by tmc_code
 )
 

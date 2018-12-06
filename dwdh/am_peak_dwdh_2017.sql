@@ -54,8 +54,9 @@ from determine_delay_hours a --,avg_dwdh
 --join determine_delay_hours b
 --on a.tmc_code = b.tmc_code
 --AM Peak is 6-10 AM
-where (date_part('hour', a.measurement_tstamp)  > 5 and date_part('hour', a.measurement_tstamp)  < 10) and --note hour 8 means 8:00-8:59 is what I'm assuming
- (extract(dow from measurement_tstamp )> 0 and extract(dow from measurement_tstamp ) < 6) --and
+where
+(date_part('hour',measurement_tstamp) between 6 and 9) and --note hour 8 means 8:00-8:59 is what I'm assuming
+ (extract(dow from measurement_tstamp ) between 1 and 5)
  --date_part('year', measurement_tstamp) = 2017
 --and date_part('hour', b.measurement_tstamp)  > 8 and date_part('hour', b.measurement_tstamp)  < 14 --note hour 8 means 8:00-8:59 is what I'm assuming
 group by a.tmc_code, a.geom, a.miles, a.road, a.direction, a.intersection, a.f_system

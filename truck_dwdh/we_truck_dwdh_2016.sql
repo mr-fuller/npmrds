@@ -34,7 +34,7 @@ from determine_delay_hours
 where  date_part('year', measurement_tstamp) = 2016 and
 ((extract(dow from measurement_tstamp ) = 0 or extract(dow from measurement_tstamp ) = 6) and
 	--off Peak
-	(date_part('hour', measurement_tstamp)  > 5 or date_part('hour', measurement_tstamp)  < 20 ))
+	(date_part('hour', measurement_tstamp) between 6 and 19))
 group by tmc_code
 )
 

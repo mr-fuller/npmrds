@@ -47,9 +47,9 @@ percentile_disc(0.5) within group (order by travel_time_minutes) as numeric),2) 
 from joined
 where
 --Mon-Fri
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and
+(extract(dow from measurement_tstamp ) between 1 and 5) and
 	--AM Peak
-	(date_part('hour',measurement_tstamp) > 5 and date_part('hour',measurement_tstamp) < 10)
+	(date_part('hour',measurement_tstamp) between 6 and 9)
 	group by tmc_code, geom)
 
 update congestion_lottr

@@ -30,8 +30,8 @@ tmc_code,
 round(sum(delay_minutes*miles),2) as pmp_dwdm_2012,
 round(sum(delay_minutes*miles)/(4*5*52*60)*100,2) as pmp_dwdm_pct_2012
 from determine_delay_hours
-where (date_part('hour', measurement_tstamp)  > 13 and date_part('hour', measurement_tstamp)  < 18 ) and
-(extract(dow from measurement_tstamp )>0 and extract(dow from measurement_tstamp ) < 6) and --Mon-Fri
+where (date_part('hour',measurement_tstamp) between 16 and 19) and
+(extract(dow from measurement_tstamp ) between 1 and 5) and--Mon-Fri
 date_part('year', measurement_tstamp) = 2012
 group by tmc_code
 )

@@ -4,9 +4,9 @@ alter table tttr
 add column if not exists tttr_we_2017 numeric,
 add column if not exists ttt_we50pct_2017 numeric,
 add column if not exists ttt_we95pct_2017 numeric;
-with 
+with
 joined as(
-	
+
 select i.*,
 g.miles,
 g.geom
@@ -23,18 +23,18 @@ percentile_disc(0.95) within group (order by travel_time) as ttt_we95pct_2017,
 percentile_disc(0.5) within group (order by travel_time) as ttt_we50pct_2017,
 case when(percentile_disc(0.5) within group (order by travel_time) = 0)
 	then null
-	else round(cast(percentile_disc(0.95) within group (order by travel_time)/percentile_disc(0.5) within group (order by travel_time) as numeric),2) 
+	else round(cast(percentile_disc(0.95) within group (order by travel_time)/percentile_disc(0.5) within group (order by travel_time) as numeric),2)
 	end as tttr
 
 from joined
-where date_part('year',measurement_tstamp) = 2017 and  
---tmc_code = '108+12989' and 
+where date_part('year',measurement_tstamp) = 2017 and
+--tmc_code = '108+12989' and
 --Sat and Sun
 (extract(dow from measurement_tstamp ) = 0 or extract(dow from measurement_tstamp ) = 6) and
 
 	--6 AM to 8 PM
-	(date_part('hour', measurement_tstamp)  > 5 or date_part('hour', measurement_tstamp)  < 20 )
-	
+	(date_part('hour', measurement_tstamp) between 6 and 19)
+
 	group by tmc_code, geom
 )
 
