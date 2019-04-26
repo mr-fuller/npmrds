@@ -20,11 +20,11 @@ on g.tmc = i.tmc_code
 apl as (
 select
 geom,
-year_record,
+--year_record,
 	case when (state = 'Ohio')
 	then '39'
 	else '26'
-	end as state_code
+	end as state_code,
 tmc_code as travel_time_code,
 	f_system,
 	urban_code,
@@ -39,10 +39,10 @@ tmc_code as travel_time_code,
 	end as	directionality,
 	round(aadt/faciltype,2) as dir_aadt,
 
-percentile_disc(0.8) within group (order by travel_time_seconds) as tt_amp80pct,
-percentile_disc(0.5) within group (order by travel_time_seconds) as tt_amp50pct,
-round(cast(percentile_disc(0.8) within group (order by travel_time_seconds)/
-percentile_disc(0.5) within group (order by travel_time_seconds) as numeric),2) as lottr
+percentile_cont(0.8) within group (order by travel_time_seconds) as tt_amp80pct,
+percentile_cont(0.5) within group (order by travel_time_seconds) as tt_amp50pct,
+round(cast(percentile_cont(0.8) within group (order by travel_time_seconds)/
+percentile_cont(0.5) within group (order by travel_time_seconds) as numeric),2) as lottr
 
 from joined
 where
@@ -50,11 +50,11 @@ where
 (extract(dow from measurement_tstamp ) between 1 and 5) and
 	--AM Peak
 	(date_part('hour',measurement_tstamp) between 6 and 9)
-	group by tmc_code, geom)
+	group by tmc_code, geom, joined.state, joined.f_system,joined.urban_code,joined.faciltype, joined.nhs, joined.aadt, joined.miles, joined.direction)
 
 update congestion_lottr
 set lottr_amp_2018 = apl.lottr,
 tt_amp50pct_2018 = apl.tt_amp50pct,
 tt_amp80pct_2018 = apl.tt_amp80pct
 from apl
-where congestion_lottr.tmc_code = apl.tmc_code
+where congestion_lottr.tmc_code = apl.travel_time_code
