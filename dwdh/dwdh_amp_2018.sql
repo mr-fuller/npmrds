@@ -1,6 +1,6 @@
 --drop table if exists passenger_dwdm;
---create table passenger_dwdm as
-alter table passenger_dwdm
+--create table passenger_dwdm_2018; 
+alter table passenger_dwdm_2018
 add column if not exists dwdm_amp_2018 numeric,
 add column if not exists dwdm_pct_amp_2018 numeric;
 
@@ -26,7 +26,7 @@ case when (i.reference_speed*0.75 > i.speed)
 end as delay_minutes
 
 from npmrds_2018_passenger_seconds_nonull_10min as i
-full outer join tmacog_tmcs as o on o.tmc = i.tmc_code
+full outer join tmacog_tmcs_2018 as o on o.tmc = i.tmc_code
 full join tmc_identification as t on t.tmc = i.tmc_code
 
 --where i.cvalue > 10
@@ -62,11 +62,11 @@ where
  (extract(dow from measurement_tstamp ) between 1 and 5)
  --date_part('year', measurement_tstamp) = 2018
 --and date_part('hour', b.measurement_tstamp)  > 8 and date_part('hour', b.measurement_tstamp)  < 14 --note hour 8 means 8:00-8:59 is what I'm assuming
-group by a.tmc_code, a.geom, a.miles, a.road, a.direction, a.intersection, a.f_system
-order by amp_dwdm_pct_2017 desc;
+group by a.tmc_code, a.geom, a.miles, a.road, a.direction, a.intersection, a.f_system)
+--order by amp_dwdm_pct_2017 desc;
 
-update passenger_dwdm as cl
+update passenger_dwdm_2018 as cl
 set dwdm_amp_2018 = dwdm.amp_dwdm,
 dwdm_pct_amp_2018 = dwdm.amp_dwdm_pct
 from dwdm
-where cl.tmc_code = dwdm.tmc_code ;
+where cl.tmc = dwdm.tmc_code ;
