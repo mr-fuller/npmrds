@@ -28,7 +28,7 @@ dwdm as
 (select
 tmc_code,
 round(sum(delay_minutes*miles),2) as dwdm_pmp,
-round(sum(delay_minutes*miles)/(4*5*52*60)*100,2) as dwdm_pct_pmp
+round(sum(delay_minutes*miles)/(4*5*52*60*miles)*100,2) as dwdm_pct_pmp
 from determine_delay_hours
 where
 (extract(dow from measurement_tstamp ) between 1 and 5) and--Mon-Fri

@@ -28,7 +28,7 @@ dwdm as
 (select
 tmc_code,
 round(sum(delay_minutes*miles),2) as midd_dwdm,
-round(sum(delay_minutes*miles)/(6*5*52*60)*100,2) as midd_dwdm_pct
+round(sum(delay_minutes*miles)/(6*5*52*60*a.miles)*100,2) as midd_dwdm_pct
 from determine_delay_hours
 where (date_part('hour',measurement_tstamp) between 10 and 15) and
 date_part('year',measurement_tstamp) = 2018 and

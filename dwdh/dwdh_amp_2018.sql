@@ -1,5 +1,5 @@
 --drop table if exists passenger_dwdm;
---create table passenger_dwdm_2018; 
+--create table passenger_dwdm_2018;
 alter table passenger_dwdm_2018
 add column if not exists dwdm_amp_2018 numeric,
 add column if not exists dwdm_pct_amp_2018 numeric;
@@ -50,7 +50,7 @@ a.f_system,
 --case when (a.geom is null)
 --then round(sum(a.delay_hours*a.miles2),2)
 round(sum(a.delay_minutes*a.miles),2) as amp_dwdm,
-round(sum(a.delay_minutes*a.miles)/(4*5*52*60)*100,2) as amp_dwdm_pct
+round(sum(a.delay_minutes*a.miles)/(4*5*52*60*a.miles)*100,2) as amp_dwdm_pct
 
 
 from determine_delay_hours a --,avg_dwdh
