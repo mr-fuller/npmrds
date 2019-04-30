@@ -1,6 +1,6 @@
 --drop table passenger_dwdm;
 --create table passenger_dwdm as
-alter table passenger_dwdm_2018
+alter table truck_dwdm_2018
 add column if not exists dwdm_midd_2018 numeric,
 add column if not exists dwdm_pct_midd_2018 numeric;
 
@@ -18,7 +18,7 @@ case when (i.reference_speed*0.75 > i.speed)
 end as delay_minutes,
 o.geom
 from tmacog_tmcs_2018 as o
-full outer join npmrds_2018_passenger_seconds_nonull_10min as i
+full outer join npmrds_2018_inrix_truck_seconds_nonull_10min as i
 on o.tmc = i.tmc_code
 full join tmc_identification as t on t.tmc = i.tmc_code
 --where i.cvalue > 10
@@ -39,7 +39,7 @@ group by tmc_code, miles
 --for midday Peak 9AM-2PM
 --am_peak as
 --(
-update passenger_dwdm_2018 as cl
+update truck_dwdm_2018 as cl
 set dwdm_midd_2018 = dwdm.midd_dwdm,
 dwdm_pct_midd_2018 = dwdm.midd_dwdm_pct
 from dwdm

@@ -1,6 +1,6 @@
 --drop table congestion_locations;
 --create table congestion_locations as
-alter table passenger_dwdm_2018
+alter table truck_dwdm_2018
 add column if not exists dwdm_we_2018 numeric,
 add column if not exists dwdm_pct_we_2018 numeric;
 --reset column to clear data from previous queries
@@ -21,7 +21,7 @@ case when (i.reference_speed*0.75 > i.speed)
 end as delay_minutes,
 o.geom
 from tmacog_tmcs as o
-full outer join npmrds_2018_passenger_seconds_nonull_10min as i
+full outer join npmrds_2018_inrix_truck_seconds_nonull_10min as i
 on o.tmc = i.tmc_code
 full join tmc_identification as t on t.tmc = i.tmc_code
 --where i.cvalue > 10
@@ -46,7 +46,7 @@ group by tmc_code, miles
 
 --for off Peak midnight-6AM and 6-11:59 PM
 
-update passenger_dwdm_2018 as cl
+update truck_dwdm_2018 as cl
 set dwdm_we_2018 = dwdm.dwdm_we,
 dwdm_pct_we_2018 = dwdm.dwdm_pct_we
 from dwdm
