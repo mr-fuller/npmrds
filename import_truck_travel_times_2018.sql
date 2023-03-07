@@ -39,7 +39,7 @@ create table npmrds_truck_pmp_2018 as
 	(date_part('hour',measurement_tstamp) between 16 and 19);
 
 \echo 'Creating 2018 Overnight table at ' `date`
-create table npmrds_truck_pmp_2018 as
+create table npmrds_truck_ovn_2018 as
     select * from npmrds_2018_truck_seconds_nonull_10min
     where
     --overnight is 8 PM to 6 AM every day of the week
